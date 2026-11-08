@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtration du jus de fruit</title>
+</head>
+
+<body>
+
+    <h1>Application de filtration du jus de fruit</h1>
+
+    <h2>Entrer les données initiales</h2>
+
+    <form action="/calculer" method="post">
+
+        <label>Débit initial du jus (kg/h) :</label>
+        <input type="number" name="m0" step="any" required>
+
+        <br><br>
+
+        <label>Concentration initiale (%) :</label>
+        <input type="number" name="x0" step="any" required>
+
+        <br><br>
+
+        <label>Débit des résidus filtrés (kg/h) :</label>
+        <input type="number" name="residus" step="any" required>
+
+        <br><br>
+
+        <button type="submit">Calculer</button>
+
+    </form>
+
+    {% if erreur %}
+        <h3>{{ erreur }}</h3>
+    {% endif %}
+
+    {% if m1 is defined %}
+
+        <h2>Résultats de la filtration</h2>
+
+        <p>Débit après filtration : {{ m1 }} kg/h</p>
+
+        <p>Concentration après filtration : {{ x1 }} %</p>
+
+        <p>Erreur du bilan de matière : {{ bilan }} kg/h</p>
+
+    {% endif %}
+
+</body>
+</html>
