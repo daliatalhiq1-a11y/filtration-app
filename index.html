@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcessLab | Filtration</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">✦</div>
+            <div>
+                <h2>ProcessLab</h2>
+                <span>Process Engineering</span>
+            </div>
+        </div>
+
+        <div class="menu-title">MENU PRINCIPAL</div>
+
+        <nav class="navigation">
+            <a href="/" class="nav-item active">
+                <span>▦</span> Dashboard
+            </a>
+            <a href="/" class="nav-item">
+                <span>⚗</span> Filtration
+            </a>
+            <a href="/historique" class="nav-item">
+                <span>▤</span> Historique
+            </a>
+            <a href="/rapports" class="nav-item">
+                <span>▥</span> Rapports
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <div class="help-icon">?</div>
+                <h4>Besoin d'aide ?</h4>
+                <p>Consultez les informations de votre procédé.</p>
+            </div>
+            <p class="version">PROCESSLAB v1.0</p>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="breadcrumb">Accueil / Opérations unitaires / Filtration</p>
+                <h1>Simulation de filtration</h1>
+            </div>
+
+            <div class="user-profile">
+                <div class="status-dot"></div>
+                <div class="avatar">PL</div>
+                <div>
+                    <strong>Utilisateur</strong>
+                    <small>Laboratoire</small>
+                </div>
+            </div>
+        </header>
+
+        <section class="welcome-section">
+            <div>
+                <span class="eyebrow">OPÉRATION UNITAIRE · 01</span>
+                <h2>Filtration du jus de fruit</h2>
+                <p>
+                    Analysez les paramètres du procédé et calculez
+                    automatiquement les résultats de filtration.
+                </p>
+            </div>
+            <div class="welcome-icon">⚗</div>
+        </section>
+
+        <!-- STATISTICS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">↗</div>
+                <div class="stat-label">Débit initial</div>
+                <h3>{{ m0 if m0 is defined else "—" }}</h3>
+                <span>kg/h</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">✓</div>
+                <div class="stat-label">Débit filtré</div>
+                <h3>{{ m1 if m1 is defined else "—" }}</h3>
+                <span>kg/h</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple">%</div>
+                <div class="stat-label">Concentration finale</div>
+                <h3>{{ x1 if x1 is defined else "—" }}</h3>
+                <span>%</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">◉</div>
+                <div class="stat-label">Résidus filtrés</div>
+                <h3>{{ residus if residus is defined else "—" }}</h3>
+                <span>kg/h</span>
+            </div>
+
+        </section>
+
+        <!-- CALCULATION AREA -->
+        <section class="content-grid">
+
+            <div class="panel form-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <span class="section-number">01 — PARAMÈTRES</span>
+                        <h2>Données initiales</h2>
+                        <p>Renseignez les caractéristiques du jus brut.</p>
+                    </div>
+                    <div class="panel-icon">✎</div>
+                </div>
+
+                <form action="/calculer" method="post">
+
+                    <div class="form-group">
+                        <label for="m0">Débit initial du jus</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="m0" name="m0"
+                                step="any" min="0" placeholder="Ex : 1000"
+                                value="{{ m0 if m0 is defined else 1000 }}"
+                                required>
+                            <span>kg/h</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="x0">Concentration initiale</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="x0" name="x0"
+                                step="any" min="0" max="100"
+                                placeholder="Ex : 10"
+                                value="{{ x0 if x0 is defined else 10 }}"
+                                required>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="residus">Débit des résidus filtrés</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="residus" name="residus"
+                                step="any" min="0"
+                                placeholder="Ex : 20"
+                                value="{{ residus if residus is defined else 20 }}"
+                                required>
+                            <span>kg/h</span>
+                        </div>
+                    </div>
+
+                    <div class="form-note">
+                        <span>ⓘ</span>
+                        Vérifiez les unités avant de lancer le calcul.
+                    </div>
+
+                    <button type="submit" class="calculate-btn">
+                        Calculer la filtration <span>→</span>
+                    </button>
+
+                </form>
+            </div>
+
+            <!-- RESULTS -->
+            <div class="panel results-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <span class="section-number">02 — ANALYSE</span>
+                        <h2>Résultats du procédé</h2>
+                        <p>Résultats calculés automatiquement.</p>
+                    </div>
+                    <div class="panel-icon result-icon">✓</div>
+                </div>
+
+                {% if erreur %}
+                    <div class="error-message">{{ erreur }}</div>
+                {% endif %}
+
+                {% if m1 is defined %}
+
+                    <div class="result-highlight">
+                        <span>Débit après filtration</span>
+                        <h2>{{ m1 }} <small>kg/h</small></h2>
+                        <p>Débit du jus filtré</p>
+                    </div>
+
+                    <div class="result-row">
+                        <div>
+                            <span class="result-bullet turquoise"></span>
+                            Concentration après filtration
+                        </div>
+                        <strong>{{ x1 }} %</strong>
+                    </div>
+
+                    <div class="result-row">
+                        <div>
+                            <span class="result-bullet blue-dot"></span>
+                            Erreur du bilan de matière
+                        </div>
+                        <strong>{{ bilan }} kg/h</strong>
+                    </div>
+
+                    <div class="success-message">
+                        ✓ Calcul de filtration effectué.
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-results">
+                        <div class="empty-icon">⌁</div>
+                        <h3>En attente de calcul</h3>
+                        <p>
+                            Entrez les données initiales puis cliquez
+                            sur « Calculer la filtration » pour afficher
+                            vos résultats.
+                        </p>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+        <!-- PROCESS INFORMATION -->
+        <section class="panel process-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="section-number">03 — SCHÉMA DU PROCÉDÉ</span>
+                    <h2>Principe de filtration</h2>
+                    <p>Séparation des particules insolubles du jus brut.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+
+                <div class="flow-box feed">
+                    <span class="flow-symbol">◉</span>
+                    <strong>Jus brut</strong>
+                    <small>Entrée : m₀</small>
+                </div>
+
+                <div class="flow-arrow">→</div>
+
+                <div class="flow-box filter">
+                    <span class="flow-symbol">⚗</span>
+                    <strong>Filtration</strong>
+                    <small>Séparation</small>
+                </div>
+
+                <div class="flow-arrow">→</div>
+
+                <div class="flow-box product">
+                    <span class="flow-symbol">✓</span>
+                    <strong>Jus filtré</strong>
+                    <small>Sortie : m₁</small>
+                </div>
+
+            </div>
+
+            <div class="process-note">
+                <span>ⓘ</span>
+                Les matières solubles sont conservées dans le jus filtré.
+                Les particules insolubles sont éliminées sous forme de résidus.
+            </div>
+        </section>
+
+        <footer>
+            <span>© 2026 ProcessLab – Simulation des procédés</span>
+            <span>Laboratoire de génie des procédés</span>
+        </footer>
+
+    </main>
+</div>
+
+</body>
+</html>

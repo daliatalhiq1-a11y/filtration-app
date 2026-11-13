@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcessLab | Rapports</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+<div style="max-width:1200px; margin:40px auto; padding:25px;">
+
+    <h1 style="color:#34485d;">Rapports et statistiques</h1>
+    <p style="color:#8c9aab;">Analyse de vos opérations de filtration</p>
+
+    <a href="/" style="color:#398d84;">← Retour au Dashboard</a>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:30px;">
+
+        <div class="auth-card">
+            <p>Total des simulations</p>
+            <h2 style="color:#398d84;">{{ total }}</h2>
+        </div>
+
+        <div class="auth-card">
+            <p>Débit initial moyen</p>
+            <h2 style="color:#398d84;">{{ debit_moyen }} kg/h</h2>
+        </div>
+
+        <div class="auth-card">
+            <p>Débit filtré moyen</p>
+            <h2 style="color:#398d84;">{{ debit_filtre_moyen }} kg/h</h2>
+        </div>
+
+        <div class="auth-card">
+            <p>Concentration finale moyenne</p>
+            <h2 style="color:#398d84;">{{ concentration_moyenne }} %</h2>
+        </div>
+    </div>
+
+    <div class="auth-card" style="max-width:100%; margin-top:25px;">
+        <h2>Analyse des débits</h2>
+        <canvas id="debitChart"></canvas>
+    </div>
+
+</div>
+
+<script>
+const labels = {{ labels | tojson }};
+const debits = {{ debits | tojson }};
+
+new Chart(document.getElementById("debitChart"), {
+    type: "bar",
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "Débit filtré (kg/h)",
+            data: debits,
+            backgroundColor: "#58aaa1",
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+</script>
+
+</body>
+</html>

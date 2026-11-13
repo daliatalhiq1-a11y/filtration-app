@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcessLab | Historique</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div style="max-width:1200px; margin:50px auto; padding:25px;">
+
+    <h1>Historique des simulations</h1>
+    <p>Bienvenue {{ username }}, voici vos anciennes filtrations.</p>
+
+    <a href="/" style="color:#398d84;">← Retour au Dashboard</a>
+
+    <div style="background:white; padding:25px; margin-top:25px;
+                border-radius:15px; overflow-x:auto;">
+
+        {% if simulations %}
+
+        <table style="width:100%; border-collapse:collapse; text-align:center;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Débit initial</th>
+                    <th>Concentration initiale</th>
+                    <th>Résidus</th>
+                    <th>Débit filtré</th>
+                    <th>Concentration finale</th>
+                    <th>Bilan</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for s in simulations %}
+                <tr>
+                    <td>{{ s.created_at }}</td>
+                    <td>{{ s.debit_initial }} kg/h</td>
+                    <td>{{ s.concentration_initiale }} %</td>
+                    <td>{{ s.residus }} kg/h</td>
+                    <td>{{ s.debit_filtre }} kg/h</td>
+                    <td>{{ s.concentration_finale }} %</td>
+                    <td>{{ s.bilan }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+            <p>Aucune simulation enregistrée pour le moment.</p>
+        {% endif %}
+
+    </div>
+</div>
+
+</body>
+</html>
