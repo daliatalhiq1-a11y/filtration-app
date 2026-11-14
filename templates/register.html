@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcessLab | Inscription</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">✦</div>
+            <h1>Créer un compte</h1>
+            <p>Rejoignez ProcessLab pour gérer vos simulations.</p>
+
+            {% if erreur %}
+                <div class="error-message">{{ erreur }}</div>
+            {% endif %}
+
+            <form action="/register" method="post">
+                <label>Nom d'utilisateur</label>
+                <input type="text" name="username" placeholder="Votre username" required>
+
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Votre email" required>
+
+                <label>Mot de passe</label>
+                <input type="password" name="password" placeholder="Minimum 8 caractères" minlength="8" required>
+
+                <button type="submit" class="calculate-btn">Créer mon compte →</button>
+            </form>
+
+            <p class="auth-footer">
+                Déjà inscrit ?
+                <a href="/login">Se connecter</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

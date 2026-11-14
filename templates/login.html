@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcessLab | Connexion</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">✦</div>
+            <h1>Bienvenue !</h1>
+            <p>Connectez-vous à votre espace ProcessLab.</p>
+
+            {% if erreur %}
+                <div class="error-message">{{ erreur }}</div>
+            {% endif %}
+
+            <form action="/login" method="post">
+                <label>Nom d'utilisateur</label>
+                <input type="text" name="username" placeholder="Votre username" required>
+
+                <label>Mot de passe</label>
+                <input type="password" name="password" placeholder="Votre mot de passe" required>
+
+                <button type="submit" class="calculate-btn">Se connecter →</button>
+            </form>
+
+            <p class="auth-footer">
+                Pas encore de compte ?
+                <a href="/register">Créer un compte</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
